@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Slingshot : MonoBehaviour
 {
-    [Header("Set in Inspector")]                                            
+    static private Slingshot S;
+
+   
+       [Header("Set in Inspector")]                                            
     public GameObject prefabProjectile;
     public float velocityMult = 8f;
 
@@ -17,9 +20,17 @@ public class Slingshot : MonoBehaviour
 
     private Rigidbody projectileRigidbody;
 
-   
-    // Start is called before the first frame update
-             void Start()
+    static public Vector3 LAUNCH_POS
+    {                                        // b
+        get
+        {
+            if (S == null) return Vector3.zero;
+            return S.launchPos;
+        }
+    }
+
+       // Start is called before the first frame update
+                void Start()
              {
         
              }
@@ -62,6 +73,7 @@ public class Slingshot : MonoBehaviour
         launchPoint = launchPointTrans.gameObject;
         launchPoint.SetActive(false);
         launchPos = launchPointTrans.position;
+        S = this;
 
     }
     void OnMouseEnter()
